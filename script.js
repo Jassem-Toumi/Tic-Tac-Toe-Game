@@ -55,11 +55,10 @@ input.addEventListener("keypress", function(event) {
       event.preventDefault();
       // Trigger the button element with a click
       Startbtn.click();
-      blur();
     }
-
-
   });
+
+  input.onfocus = blur();
 })
 
 
