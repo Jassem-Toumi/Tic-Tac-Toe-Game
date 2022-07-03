@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta author="Jassem Toumi" date-of-release = "07/02/2022">
+    <title>Tic Tac Toe</title>
+    <!-- CSS stylesheet -->
+    <link rel="stylesheet" href="./stylesheet.css">
+    <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
+    <!-- JS files -->
+    <script src="./script.js" defer></script>
+</head>
+<body>
+    <!-- =============== Settings ================== -->
+    <div class="settings">
+        <div class="title">Tic Tac Toe</div>
+        <div class="players">
+            <div class="player1">
+                <div class="signX"></div>
+                <form>
+                    <label for="Username">Player 1</label>
+                    <input type="text" id="Username1" placeholder="Enter Your Name">
+                </form>
+            </div>
+            <div class="player2">
+                <div class="signY"></div>
+                <form>
+                    <label for="Username">Player 2</label>
+                    <input type="text" id="Username2" placeholder="Enter Your Name">
+                </form>
+            </div>   
+        </div>
+        <div class="btn"><button>Start The Game</button></div>
+    </div>
+
+    <!-- =============== The BOARD ================= -->
+    <div class="board" id="board">
+        <div class="cell" data-cell></div>
+        <div class="cell" data-cell></div>
+        <div class="cell" data-cell></div>
+        <div class="cell" data-cell></div>
+        <div class="cell" data-cell></div>
+        <div class="cell" data-cell></div>
+        <div class="cell" data-cell></div>
+        <div class="cell" data-cell></div>
+        <div class="cell" data-cell></div>
+    </div>
+
+    <!-- ============== The Dashboard Section ================= -->
+    <div class="dashboard">
+        <div class="logo">Tic Tac Toe</div>
+        <div class="p1">
+            <div class="signX"></div>
+            :  <span></span>
+            <div class="scoreP1"></div>
+        </div>
+        <div class="p2">
+            <div class="signY"></div>
+            : <span></span>
+            <div class="scoreP2"></div>
+        </div>
+    </div>
+    <!-- ==== EXTRA RESTART BUTTON ==== -->
+    <div class="extraRestratBtn">
+        Restart
+        <i class='bx bx-refresh RefreshBtn'></i>
+    </div>
+
+    <!-- ===== CREDIT TO DEVELOPER =====-->
+    <div class="copyright">&copy;Jassem Toumi</div>
+    <div class="social-icons">
+        <a href="https://www.linkedin.com/in/jassem-toumi/" target="_blank"><i class='bx bxl-linkedin-square'></i></a>
+        <a href="https://www.facebook.com/malcom.nano.79/" target="_blank"><i class='bx bxl-facebook-square'></i></a>
+        <a href="https://github.com/Jassem-Toumi" target="_blank"><i class='bx bxl-github'></i></a>
+    </div>
+    <!--================ Winning Message ================-->
+    <div class="winning-message ">
+        <div winSign class="cell"></div>
+        <div id="winningMessage" data-winning-message-text>
+            Fedi WINS!  
+        </div>
+
+        <div class="p1">
+            <div class="signX"></div>
+            :  <span></span>
+            <div class="scoreP1"></div>
+        </div>
+        <div class="p2">
+            <div class="signY"></div>
+            : <span></span>
+            <div class="scoreP2"></div>
+       </div>
+
+       <div class="buttons">
+        <button id="restartBtn">New Game</button>
+        <button id="ContinueBtn" >Continue</button>
+       </div>
+   
+    </div>
+
+
+</body>
+</html>

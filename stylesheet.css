@@ -1,0 +1,667 @@
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+  text-decoration: none;
+}
+
+body {
+  margin: 0;
+  overflow-x: hidden;
+}
+
+:root {
+  --cell-size: 140px;
+  --mark-size: calc(var(--cell-size) * 0.7);
+}
+
+.board {
+  width: 100vw;
+  height: 100vh;
+  display: grid;
+  justify-content: center;
+  align-content: center;
+  justify-items: center;
+  align-items: center;
+  grid-template-columns: repeat(3, auto);
+}
+
+.cell {
+  width: var(--cell-size);
+  height: var(--cell-size);
+  border: 1px solid #3d3d3d;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+}
+
+.cell:first-child,
+.cell:nth-child(2),
+.cell:nth-child(3) {
+  border-top: none;
+}
+
+.cell:nth-child(3n + 3) {
+  border-right: none;
+}
+
+.cell:nth-child(3n + 1) {
+  border-left: none;
+}
+
+.cell:last-child,
+.cell:nth-child(8),
+.cell:nth-child(7) {
+  border-bottom: none;
+}
+
+/*================================ Creating the X sign 
+==================================*/
+
+.cell.x::before,
+.cell.x::after,
+.board.x .cell:not(.x):not(.circle):hover::before,
+.board.x .cell:not(.x):not(.circle):hover::after {
+  content: "";
+  width: calc(var(--mark-size) * 0.15);
+  height: var(--mark-size);
+  /* background-color: black; */
+  background-color: rgb(44, 69, 212);
+  position: absolute;
+  transition: all 0.3s;
+}
+
+.cell.x::before,
+.board.x .cell:not(.x):not(.circle):hover::before {
+  transform: rotate(45deg);
+}
+
+.cell.x::after,
+.board.x .cell:not(.x):not(.circle):hover::after {
+  transform: rotate(-45deg);
+}
+
+/*================================ Creating the O sign 
+==================================*/
+
+.cell.circle::before,
+.cell.circle::after,
+.board.circle .cell:not(.x):not(.circle):hover::before,
+.board.circle .cell:not(.x):not(.circle):hover::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  transition: all 0.3s;
+}
+
+.cell.circle::before,
+.board.circle .cell:not(.x):not(.circle):hover::before {
+  width: var(--mark-size);
+  height: var(--mark-size);
+  /* background-color: #000; */
+  background-color: rgb(231, 72, 32);
+}
+
+.cell.circle::after,
+.board.circle .cell:not(.x):not(.circle):hover::after {
+  width: calc(var(--mark-size) * 0.7);
+  height: calc(var(--mark-size) * 0.7);
+  background-color: #fff;
+}
+
+.cell.x,
+.cell.circle {
+  cursor: not-allowed;
+}
+
+/* Make the color of the hovereffect lightfray */
+.board.x .cell:not(.x):not(.circle):hover::before,
+.board.x .cell:not(.x):not(.circle):hover::after {
+  background-color: lightgray;
+}
+
+.board.circle .cell:not(.x):not(.circle):hover::before {
+  background-color: lightgray;
+}
+
+/* styling the winning message */
+.winning-message {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(21, 22, 21, 0.959);
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  color: white;
+  font-size: 4rem;
+  padding-top: 3.5rem;
+  display: flex;
+  transform: translateY(-150%);
+  transition: all 0.4s;
+}
+
+#winningMessage {
+  margin: 0.25rem auto 2rem;
+}
+
+.winning-message > .p2 {
+  margin: 1rem 0 3rem;
+}
+
+.winning-message > .p2 .signY::after {
+  background-color: rgba(30, 31, 30, 0.938);
+}
+.winning-message button {
+  font-size: 2rem;
+  background-color: rgb(175, 240, 45);
+  border: 1px solid black;
+  padding: 0.5rem 2rem;
+  cursor: pointer;
+  border-radius: 0.6rem;
+  transition: all 0.3s;
+  animation: scale 0.4s linear infinite alternate;
+}
+
+#ContinueBtn {
+  background-color: rgb(233, 236, 45);
+}
+
+@keyframes scale {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.08);
+  }
+}
+
+.winning-message.show {
+  transform: translateY(0);
+}
+
+.buttons {
+  display: flex;
+  flex-direction: row;
+  gap: 3rem;
+}
+/* 
+
+
+*/
+/*=================================================
+                    Settings 
+ =================================================*/
+.settings {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding-top: 2rem;
+  /* background-color: rgba(21, 22, 21); */
+  background-color: rgb(37, 185, 170);
+  z-index: 150;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  gap: 1rem;
+  background: linear-gradient(
+    342deg,
+    rgba(27, 227, 131, 1) 0%,
+    rgba(37, 185, 151, 1) 40%
+  );
+}
+
+.players {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  gap: 2rem;
+}
+
+.player1,
+.player2 {
+  border: 1px solid lightgray;
+  width: 30%;
+  max-height: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  background-color: rgb(240, 240, 240);
+  box-shadow: 0.8rem 0.8rem 1rem rgba(32, 32, 32, 0.739);
+  border-radius: 20px;
+}
+
+.signX,
+.signY {
+  width: calc(var(--cell-size) * 0.7);
+  height: calc(var(--cell-size) * 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.signX::before,
+.signX::after {
+  content: "";
+  width: calc(var(--mark-size) * 0.1);
+  height: calc(var(--mark-size) * 0.6);
+  /* background-color: lightgray; */
+  background-color: rgb(44, 69, 212);
+  position: absolute;
+}
+
+.signX::before {
+  transform: rotate(45deg);
+}
+
+.signX::after {
+  transform: rotate(-45deg);
+}
+
+.signY::before,
+.signY::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  transition: all 0.3s;
+}
+
+.signY::before {
+  width: calc(var(--mark-size) * 0.6);
+  height: calc(var(--mark-size) * 0.6);
+  /* background-color: lightgray; */
+  background-color: rgb(231, 72, 32);
+}
+
+.signY::after {
+  width: calc(var(--mark-size) * 0.4);
+  height: calc(var(--mark-size) * 0.4);
+  background-color: rgb(240, 240, 240);
+}
+
+form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 1.8rem;
+  margin-top: 1.5rem;
+}
+
+label {
+  font-size: 2rem;
+  color: rgb(49, 49, 49);
+}
+
+form input {
+  padding: 0.3rem;
+  font-size: 1.4rem;
+  text-align: center;
+  max-width: 70%;
+  border-radius: 1rem;
+  border: 1px solid rgb(200, 200, 200);
+}
+
+input:focus::placeholder {
+  color: transparent;
+}
+
+#Username1 {
+  color: rgb(44, 69, 212) !important;
+}
+#Username2 {
+  color: rgb(231, 72, 32) !important;
+}
+
+.title {
+  color: white;
+  font-size: 4rem;
+  text-shadow: 0.2rem 0.2rem rgb(49, 49, 49);
+}
+
+.btn button {
+  padding: 1.5rem 4rem;
+  font-size: 1.5rem;
+  border-radius: 0.6rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  box-shadow: 1.5rem 1.5rem 2rem rgba(32, 32, 32, 0.739);
+  border: 1px solid rgb(49, 49, 49);
+  background-color: rgb(175, 240, 45);
+  animation: Scale 0.5s linear infinite alternate;
+}
+
+@keyframes Scale {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-5px);
+  }
+}
+
+.hide {
+  transition: all 0.4s;
+  transform: translateY(-150%);
+}
+
+/* ================================================
+            The Dashboard Section 
+==================================================*/
+.dashboard {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem 0 0 2rem;
+  width: 450px;
+  height: 450px;
+  justify-content: start;
+  align-items: start;
+  background-color: rgb(37, 185, 170);
+  clip-path: polygon(0% 0%, 100% 0%, 0 100%);
+}
+
+.p1,
+.p2 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.8rem;
+  font-size: 2rem;
+  color: rgb(246, 244, 244);
+}
+
+.p1 span,
+.p2 span {
+  font-size: 2rem;
+}
+
+.dashboard .logo {
+  font-size: 3rem;
+  border-bottom: 1px solid rgb(49, 49, 49);
+  margin-bottom: 2rem;
+  text-shadow: 0.2rem 0.2rem rgb(49, 49, 49);
+  color: white;
+}
+
+.p1 .signX,
+.p2 .signY {
+  width: calc(var(--cell-size) * 0.2);
+  height: calc(var(--cell-size) * 0.2);
+}
+
+.p1 .signX::before,
+.p1 .signX::after {
+  width: calc(var(--mark-size) * 0.1);
+  height: calc(var(--mark-size) * 0.4);
+  background-color: rgb(44, 69, 212);
+}
+
+.p2 .signY::before {
+  width: calc(var(--mark-size) * 0.4);
+  height: calc(var(--mark-size) * 0.4);
+  background-color: rgb(231, 72, 32);
+}
+.p2 .signY::after {
+  width: calc(var(--mark-size) * 0.25);
+  height: calc(var(--mark-size) * 0.25);
+  background-color: rgb(37, 185, 170);
+}
+
+/* QUICK FIX */
+.winning-message .cell {
+  border: none;
+}
+.winning-message .cell.circle::after {
+  background-color: rgba(30, 31, 30, 0.938);
+  z-index: 100;
+}
+
+/* ======== REFRESH BUTTON ========= */
+.extraRestratBtn {
+  position: absolute;
+  top: 2%;
+  right: 4%;
+  display: flex;
+  flex-direction: column;
+  color: #3d3d3d;
+}
+
+.extraRestratBtn i {
+  cursor: pointer;
+  font-size: 34px;
+  text-align: center;
+}
+
+/* ====== Credit to developer ======== */
+.copyright {
+  left: 2%;
+}
+.copyright,
+.social-icons {
+  position: absolute;
+  bottom: 2%;
+  z-index: 2000;
+  color: #3d3d3d;
+}
+.social-icons {
+  right: 2%;
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}
+.social-icons i {
+  text-align: center;
+  font-size: 2rem;
+}
+.social-icons a {
+  color: #3d3d3d;
+}
+
+/* ==========================================
+                 Responsive Design
+============================================*/
+
+/* ============= Landscape Screens ================== */
+@media screen and (max-width: 1024px) {
+  .winning-message > .p2 {
+    margin: 2.5rem 0 4rem;
+  }
+  .winning-message > .p1 {
+    margin-top: 2rem;
+  }
+}
+
+@media (min-height: 800px) and (max-width: 1024px) {
+  .settings {
+    padding-top: 20%;
+    gap: 2rem;
+  }
+  :root {
+    --cell-size: 200px;
+  }
+
+  .dashboard {
+    width: 100%;
+    height: 400px;
+    clip-path: polygon(0% 0%, 0% 100%, 100% 50%, 100% 0%);
+  }
+
+  .dashboard .p1 {
+    margin-bottom: 1.5rem;
+  }
+  .board {
+    padding-top: 10%;
+  }
+}
+
+/* Quick Fix for NestHub */
+@media (max-height: 650px) and (max-width: 2025px) {
+  :root {
+    --cell-size: 120px;
+  }
+}
+/* 
+
+*/
+/* ============= Medium Screens ================== */
+@media screen and (max-width: 992px) {
+  :root {
+    --cell-size: 175px;
+  }
+
+  .dashboard {
+    width: 100%;
+    height: 350px;
+    clip-path: polygon(0% 0%, 0% 90%, 660% 0%, 0% 0%);
+  }
+
+  .extraRestratBtn i {
+    color: #f6f4f4;
+  }
+}
+
+/* ============= Small Screens ================== */
+@media screen and (max-width: 768px) {
+  :root {
+    --cell-size: 160px;
+  }
+  .players {
+    gap: 1.5rem;
+  }
+
+  .player1,
+  .player2 {
+    width: 40%;
+  }
+
+  .title {
+    font-size: 2.8rem;
+  }
+
+  label {
+    font-size: 1.5rem;
+  }
+
+  form input {
+    font-size: 1rem;
+    max-width: 60%;
+  }
+
+  ::placeholder {
+    font-size: 0.8rem;
+  }
+
+  .btn button {
+    padding: 1.2rem 2.8rem;
+    margin-top: 2rem;
+  }
+
+  .dashboard {
+    height: 280px;
+  }
+
+  .dashboard .logo {
+    font-size: 2.5rem;
+    margin-bottom: 0.9rem;
+  }
+  .dashboard .p1,
+  .dashboard .p2 {
+    margin: 0.5rem 0;
+  }
+}
+
+/* ============= Small Screens ================== */
+@media screen and (max-width: 600px) {
+  :root {
+    --cell-size: 100px;
+  }
+
+  .dashboard .logo {
+    font-size: 1.8rem;
+    text-shadow: 0.1rem 0.1rem rgb(49, 49, 49);
+  }
+
+  .dashboard .p1 {
+    margin: 0.15rem 0;
+  }
+
+  .p1 span,
+  .p2 span {
+    font-size: 1.4rem;
+  }
+
+  .board {
+    padding-top: 45%;
+  }
+
+  .winning-message {
+    font-size: 2.5rem;
+  }
+  .winning-message > .p2 {
+    margin: 1rem 0 2rem;
+  }
+  .winning-message > .p1 {
+    margin-top: 0;
+  }
+
+  .buttons {
+    flex-direction: column-reverse;
+  }
+  .winning-message button {
+    font-size: 1.5rem;
+  }
+}
+
+/* ============= Extra Small Screens ================== */
+@media screen and (max-width: 360px) {
+  :root {
+    --cell-size: 90px;
+  }
+}
+@media screen and (max-width: 320px) {
+  :root {
+    --cell-size: 80px;
+  }
+
+  .players {
+    gap: 1rem;
+  }
+
+  .title {
+    font-size: 2.5rem;
+  }
+
+  label {
+    font-size: 1.25rem;
+  }
+
+  form input {
+    font-size: 1rem;
+    max-width: 50%;
+  }
+
+  ::placeholder {
+    font-size: 0.6rem;
+  }
+
+  .btn button {
+    padding: 1rem 2rem;
+    margin-top: 2rem;
+    font-size: 1.2rem;
+  }
+}
