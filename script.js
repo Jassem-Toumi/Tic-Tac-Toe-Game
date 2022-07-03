@@ -33,12 +33,31 @@ let score = 1
 let UpdateScore
 let Input1 = document.getElementById('Username1')
 let Input2  = document.getElementById('Username2') 
+let Inputs = document.querySelectorAll('.inputs')
+let form = document.getElementsByName('form')
 
 
 UpdateSettings()
+
 Startbtn.addEventListener('click', UpdateSettings)
 Startbtn.addEventListener('click', startGame)
 continueBtn.addEventListener('click', startGame)
+
+
+
+Inputs.forEach(input => {
+    
+// Execute a function when the user presses a key on the keyboard
+input.addEventListener("keypress", function(event) {
+    // If the user presses the "Enter" key on the keyboard
+    if (event.key === "Enter") {
+      // Cancel the default action, if needed
+      event.preventDefault();
+      // Trigger the button element with a click
+      Startbtn.click();
+    }
+  });
+})
 
 
 
@@ -177,6 +196,8 @@ function UpdateSettings () {
     })
 
     settings.classList.remove('hide');
+
+
 }
 
 
@@ -188,6 +209,8 @@ function NewGame () {
 
 restartBtn.addEventListener('click', NewGame)
 RefreshBtn.addEventListener('click', NewGame)
+
+
 
 
 // /*=======================
