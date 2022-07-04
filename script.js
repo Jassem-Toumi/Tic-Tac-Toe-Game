@@ -41,8 +41,26 @@ UpdateSettings()
 
 Startbtn.addEventListener('click', UpdateSettings)
 Startbtn.addEventListener('click', startGame)
-continueBtn.addEventListener('click', startGame)
+continueBtn.addEventListener('click', continueGame)
 
+function continueGame(){
+    swapTurns()
+    setBoardHoverClass()
+    settings.classList.add('hide')
+    p1.innerText = `${player1}`
+    p2.innerText = `${player2}`
+    Input1.value = ''
+    Input2.value = ''
+    winningSign.classList.remove(`${currentWinClass}`)
+
+    cellElements.forEach(cell => {
+        cell.classList.remove(X_CLASS)
+        cell.classList.remove(CIRCLE_CLASS)
+        cell.removeEventListener('click', handleClick)
+        cell.addEventListener('click', handleClick, {once: true})
+    })
+    winningMessageContainer.classList.remove('show')
+}
 
 
 Inputs.forEach(input => {
@@ -211,6 +229,7 @@ function NewGame () {
 
 restartBtn.addEventListener('click', NewGame)
 RefreshBtn.addEventListener('click', NewGame)
+
 
 
 
