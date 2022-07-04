@@ -1,3 +1,6 @@
+/* Google Fonts */
+@import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;500;700&display=swap");
+
 *,
 *::after,
 *::before {
@@ -8,6 +11,7 @@
 body {
   margin: 0;
   overflow-x: hidden;
+  font-family: "Comfortaa", cursive;
 }
 
 :root {
@@ -165,6 +169,7 @@ body {
   border-radius: 0.6rem;
   transition: all 0.3s;
   animation: scale 0.4s linear infinite alternate;
+  font-family: "Comfortaa", cursive;
 }
 
 #ContinueBtn {
@@ -316,6 +321,10 @@ form input {
 input:focus::placeholder {
   color: transparent;
 }
+input::placeholder {
+  font-family: "Comfortaa", cursive;
+  font-size: 1rem;
+}
 
 #Username1 {
   color: rgb(44, 69, 212) !important;
@@ -340,6 +349,7 @@ input:focus::placeholder {
   border: 1px solid rgb(49, 49, 49);
   background-color: rgb(175, 240, 45);
   animation: Scale 0.5s linear infinite alternate;
+  font-family: "Comfortaa", cursive;
 }
 
 @keyframes Scale {
@@ -484,6 +494,10 @@ input:focus::placeholder {
   .winning-message > .p1 {
     margin-top: 2rem;
   }
+  input::placeholder {
+    font-family: "Comfortaa", cursive;
+    font-size: 0.8rem;
+  }
 }
 
 @media (min-height: 800px) and (max-width: 1024px) {
@@ -562,7 +576,7 @@ input:focus::placeholder {
     max-width: 60%;
   }
 
-  ::placeholder {
+  input::placeholder {
     font-size: 0.8rem;
   }
 
@@ -625,6 +639,9 @@ input:focus::placeholder {
   .winning-message button {
     font-size: 1.5rem;
   }
+  input::placeholder {
+    font-size: 0.6rem;
+  }
 }
 
 /* ============= Extra Small Screens ================== */
@@ -658,10 +675,6 @@ input:focus::placeholder {
   form input {
     font-size: 1rem;
     max-width: 48%;
-  }
-
-  ::placeholder {
-    font-size: 0.6rem;
   }
 
   .btn button {
